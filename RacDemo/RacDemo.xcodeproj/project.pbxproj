@@ -623,6 +623,7 @@
 			baseConfigurationReference = 224955C25236FD3676FAF9B1 /* Pods-RacDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				DEVELOPMENT_TEAM = HQKCAGH7NP;
 				GCC_PREFIX_HEADER = RacDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = RacDemo/Info.plist;
@@ -638,6 +639,7 @@
 			baseConfigurationReference = 6D02CD2E36EF27F45B79C5A3 /* Pods-RacDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				DEVELOPMENT_TEAM = HQKCAGH7NP;
 				GCC_PREFIX_HEADER = RacDemo/PrefixHeader.pch;
 				INFOPLIST_FILE = RacDemo/Info.plist;

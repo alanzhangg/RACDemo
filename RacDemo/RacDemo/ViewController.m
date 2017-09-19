@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "RWDummySignInService.h"
+#import <ReactiveCocoa/RACEXTScope.h>
 
 
 @interface ViewController ()
@@ -45,23 +46,28 @@
     RAC(self.usernameTextfield, backgroundColor) = [validUsernameSignal map:^id(NSNumber * number) {
         return [number boolValue] ? [UIColor clearColor] : [UIColor yellowColor];
     }];
-    
+	
+	@weakify(self);
     RACSignal * signUpActiveSignal = [RACSignal combineLatest:@[validUsernameSignal, validPasswordSignal] reduce:^id(NSNumber * usernameValid, NSNumber * passwordValid){
         return @([usernameValid boolValue] && [passwordValid boolValue]);
     }];
     [signUpActiveSignal subscribeNext:^(NSNumber * number) {
+		@strongify(self);
         self.signalButton.enabled = [number boolValue];
     }];
 	
 	[[[[self.signalButton rac_signalForControlEvents:UIControlEventTouchUpInside]
 	   doNext:^(id x) {
+		   @strongify(self);
 		   self.signalButton.enabled =NO;
 		   self.invalidLabel.hidden =YES;
 	   }]
 	  flattenMap:^id(id value) {
+		  @strongify(self);
 		  return [self signInSignal];
 	  }]
 	 subscribeNext:^(NSNumber * signedIn) {
+		 @strongify(self);
 		 self.signalButton.enabled = YES;
 		 BOOL success = [signedIn boolValue];
 		 self.invalidLabel.hidden = success;
