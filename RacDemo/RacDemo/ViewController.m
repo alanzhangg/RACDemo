@@ -52,7 +52,34 @@
     [signUpActiveSignal subscribeNext:^(NSNumber * number) {
         self.signalButton.enabled = [number boolValue];
     }];
+	
+	[[[[self.signalButton rac_signalForControlEvents:UIControlEventTouchUpInside]
+	   doNext:^(id x) {
+		   self.signalButton.enabled =NO;
+		   self.invalidLabel.hidden =YES;
+	   }]
+	  flattenMap:^id(id value) {
+		  return [self signInSignal];
+	  }]
+	 subscribeNext:^(NSNumber * signedIn) {
+		 self.signalButton.enabled = YES;
+		 BOOL success = [signedIn boolValue];
+		 self.invalidLabel.hidden = success;
+		 if(success){
+			 [self performSegueWithIdentifier:@"signInSuccess" sender:self];
+		 }
+	 }];
     
+}
+
+- (RACSignal *)signInSignal{
+	return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+		[self.signInService signInWithUsername:self.usernameTextfield.text password:self.passwordTextField.text complete:^(BOOL success) {
+			[subscriber sendNext:@(success)];
+			[subscriber sendCompleted];
+		}];
+		return nil;
+	}];
 }
 
 - (BOOL)isValidUsername:(NSString *)username {
@@ -63,22 +90,6 @@
 	return password.length > 3;
 }
 
-- (IBAction)signInButtonTouched:(id)sender {
-	self.signalButton.enabled = NO;
-	self.invalidLabel.hidden = YES;
-	
-  // sign in
-	[self.signInService signInWithUsername:self.usernameTextfield.text
-								  password:self.passwordTextField.text
-								  complete:^(BOOL success) {
-									  self.signalButton.enabled = YES;
-									  self.invalidLabel.hidden = success;
-									  if (success) {
-										  [self performSegueWithIdentifier:@"signInSuccess" sender:self];
-									  }
-								  }];
-	
-}
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];

@@ -37,9 +37,6 @@
                                     <constraint firstAttribute="width" constant="60" id="rCZ-19-sCh"/>
                                 </constraints>
                                 <state key="normal" title="sign in"/>
-                                <connections>
-                                    <action selector="signInButtonTouched:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fiz-cv-mtl"/>
-                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hwQ-Bd-KHg">
                                 <rect key="frame" x="36" y="187" width="303" height="40"/>
