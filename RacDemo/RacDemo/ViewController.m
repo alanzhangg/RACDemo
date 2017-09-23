@@ -76,6 +76,14 @@
 		 }
 	 }];
     
+    //mutalCopy and copy
+    NSMutableArray * mutableArray = [NSMutableArray arrayWithObjects:@"1", @"2", nil];
+    NSMutableArray * array = [NSMutableArray arrayWithArray: @[mutableArray]];
+    id array1 = [array copy];
+    id array2 = [array mutableCopy];
+    [array1[0] addObject:@"3"];
+    [array2[0] addObject:@"4"];
+
 }
 
 - (RACSignal *)signInSignal{
